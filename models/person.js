@@ -1,7 +1,7 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 
 // Define a person schema
-const personSchema = new moongose.Schema({
+const personSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
