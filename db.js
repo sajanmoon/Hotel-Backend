@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 // Define the MongoDB connection URL
-const mongoURL =
-  process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/default_db"; // Fallback URL
+// const mongoURL = process.env.MONGODB_URL; // Fallback URL
+const mongoURL = process.env.MONGODB_URL_LOCAL; // Fallback URL
 
 // Setup MongoDB connection
 mongoose.connect(mongoURL, {
