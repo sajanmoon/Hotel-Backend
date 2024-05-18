@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// Define the mongoDB connection URL
-// const mongoURL = process.env.MONGODB_URL_LOCAL; // Use IPv4 address
-const mongoURL = process.env.MONGODB_URL; // Use IPv4 address
+// Define the MongoDB connection URL
+const mongoURL =
+  process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/default_db"; // Fallback URL
 
-// Setup mongoDB connection
+// Setup MongoDB connection
 mongoose.connect(mongoURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // Deprecated options removed
 });
 
 // Get the default connection
@@ -25,6 +24,14 @@ db.on("error", (err) => {
 
 db.on("disconnected", () => {
   console.log("MongoDB disconnected");
+});
+
+// Gracefully close the Mongoose connection when the application terminates
+process.on("SIGINT", () => {
+  db.close(() => {
+    console.log("MongoDB connection closed due to application termination");
+    process.exit(0);
+  });
 });
 
 // Export the database connection
